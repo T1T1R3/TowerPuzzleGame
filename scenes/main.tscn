@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=4 uid="uid://dh4tim5jjob3w"]
+[gd_scene load_steps=7 format=4 uid="uid://dh4tim5jjob3w"]
 
 [ext_resource type="Script" path="res://source/Main.cs" id="1_0r2el"]
 [ext_resource type="PackedScene" uid="uid://b3hr5y010h5dd" path="res://scenes/manager/GridManager.tscn" id="2_gtuho"]
 [ext_resource type="TileSet" uid="uid://bufp8rvs2x8d2" path="res://resources/tiles.tres" id="2_qfrog"]
 [ext_resource type="TileSet" uid="uid://41klem8yb3ks" path="res://resources/highlight_tileset.tres" id="3_v3bt8"]
+[ext_resource type="PackedScene" uid="uid://dyeh0qm3hcign" path="res://scenes/building/base.tscn" id="5_hey3b"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o5nq4"]
 size = Vector2(64, 64)
@@ -43,3 +44,6 @@ grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Place Building"
+
+[node name="Base" parent="." instance=ExtResource("5_hey3b")]
+position = Vector2(192, 256)
