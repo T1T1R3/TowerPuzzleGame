@@ -9,7 +9,7 @@ public partial class Main : Node
 	private Sprite2D cursor;
 	private PackedScene buildingScene;
 	private Button placeBuildingButton;
-	private Vector2? hoveredGridCell;
+	private Vector2I? hoveredGridCell;
 	public override void _Ready()
 	{
 		buildingScene = GD.Load<PackedScene>("res://scenes/building.tscn");
@@ -37,7 +37,7 @@ public partial class Main : Node
 		if (cursor.Visible && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
 		{
 			hoveredGridCell = gridPosition;
-			gridManager.HighlightValidTilesInRadius(hoveredGridCell.Value, 3);
+			gridManager.HighlightValidTilesInRadius(hoveredGridCell.Value, 2);
 		}
 	}
 
