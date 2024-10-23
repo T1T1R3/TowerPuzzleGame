@@ -23,7 +23,7 @@ public partial class Main : Node
 
 	public override void _UnhandledInput(InputEvent evt)
 	{
-		if (hoveredGridCell.HasValue && evt.IsActionPressed("left_click") && gridManager.IsTilePositionValid(hoveredGridCell.Value))
+		if (hoveredGridCell.HasValue && evt.IsActionPressed("left_click") && gridManager.IsTilePositionBuildable(hoveredGridCell.Value))
 		{
 			PlaceBuildAtHoveredCellPos();
 			cursor.Visible = false;
@@ -37,17 +37,18 @@ public partial class Main : Node
 		if (cursor.Visible && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
 		{
 			hoveredGridCell = gridPosition;
-			gridManager.HighlightBuildableTiles();
+			gridManager.HighlightExpandedBuildableTile(hoveredGridCell.Value, 3);
 		}
 	}
 
 	private void PlaceBuildAtHoveredCellPos()
 	{
 		if (!hoveredGridCell.HasValue) return;
+		
 		var building = buildingScene.Instantiate<Node2D>();
 		AddChild(building);
+		
 		building.GlobalPosition = hoveredGridCell.Value * 64;
-		gridManager.TurnTileAsOccupied(hoveredGridCell.Value);
 		
 		hoveredGridCell = null;
 		gridManager.ClearHighlightTiles();
@@ -64,6 +65,7 @@ public partial class Main : Node
 		}
 		else
 			cursor.Visible = true;
+		gridManager.HighlightBuildableTiles();
 	}
 	
 }
