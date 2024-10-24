@@ -1,5 +1,6 @@
 using Godot;
 using Game.Manager;
+using Game.Resources.Building;
 
 namespace Game;
 
@@ -7,18 +8,18 @@ public partial class Main : Node
 {
 	private GridManager gridManager;
 	private Sprite2D cursor;
-	private PackedScene towerScene;
-	private PackedScene villageScene;
+	private BuildingResource towerResource;
+	private BuildingResource villageResource;
 	private Button placeTowerButton;
 	private Button placeVillageButton;
 	private Vector2I? hoveredGridCell;
 	private Node2D ySortRoot;
-	private PackedScene toPlaceBuildingScene;
+	private BuildingResource toPlaceBuildingResource;
 	
 	public override void _Ready()
 	{
-		towerScene = GD.Load<PackedScene>("res://scenes/building/building.tscn");
-		villageScene = GD.Load<PackedScene>("res://scenes/building/village.tscn");
+		towerResource = GD.Load<BuildingResource>("res://resources/building/tower.tres");
+		villageResource = GD.Load<BuildingResource>("res://resources/building/village.tres");
 		gridManager = GetNode<GridManager>("GridManager");
 		cursor = GetNode<Sprite2D>("Cursor");
 		ySortRoot = GetNode<Node2D>("YSortRoot");
@@ -42,10 +43,10 @@ public partial class Main : Node
 	{
 		var gridPosition = gridManager.GetMouseGridPos();
 		cursor.GlobalPosition = gridPosition * 64;
-		if (cursor.Visible && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
+		if (toPlaceBuildingResource != null && cursor.Visible && (!hoveredGridCell.HasValue || hoveredGridCell.Value != gridPosition))
 		{
 			hoveredGridCell = gridPosition;
-			gridManager.HighlightExpandedBuildableTile(hoveredGridCell.Value, 3);
+			gridManager.HighlightExpandedBuildableTile(hoveredGridCell.Value, toPlaceBuildingResource.BuildableRadius);
 		}
 		
 	}
@@ -54,7 +55,7 @@ public partial class Main : Node
 	{
 		if (!hoveredGridCell.HasValue) return;
 		
-		var building = toPlaceBuildingScene.Instantiate<Node2D>();
+		var building = toPlaceBuildingResource.BuildingScene.Instantiate<Node2D>();
 		ySortRoot.AddChild(building);
 		
 		building.GlobalPosition = hoveredGridCell.Value * 64;
@@ -66,7 +67,7 @@ public partial class Main : Node
 
 	private void OnPlaceTowerButtonPressed()
 	{
-		toPlaceBuildingScene = towerScene;
+		toPlaceBuildingResource = towerResource;
 		if (cursor.Visible)
 		{
 			cursor.Visible = false;
@@ -80,7 +81,7 @@ public partial class Main : Node
 	
 	private void OnPlaceVillageButtonPressed()
 	{
-		toPlaceBuildingScene = villageScene;
+		toPlaceBuildingResource = villageResource;
 		if (cursor.Visible)
 		{
 			cursor.Visible = false;
