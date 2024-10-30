@@ -9,6 +9,9 @@ namespace Game.Manager;
 
 public partial class GridManager : Node
 {
+	private const string IS_BUILDABLE = "is_buildable";
+	private const string IS_WOOD = "is_wood";
+	
 	private HashSet<Vector2I> validBuildableTiles = new HashSet<Vector2I>();
 	[Export] private TileMapLayer highlightTileMapLayer;
 	[Export] private TileMapLayer baseTerrainTileMapLayer;
@@ -28,7 +31,7 @@ public partial class GridManager : Node
 		{
 			var customData = layer.GetCellTileData(tilePosition);
 			if (customData == null) continue;
-			return (bool)customData.GetCustomData("Buildable");	
+			return (bool)customData.GetCustomData(IS_BUILDABLE);	
 		}
 
 		return false;
