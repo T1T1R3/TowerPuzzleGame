@@ -1,6 +1,7 @@
 using Godot;
 using Game.Manager;
 using Game.Resources.Building;
+using Game.UI;
 
 namespace Game;
 
@@ -15,6 +16,8 @@ public partial class Main : Node
 	private Vector2I? hoveredGridCell;
 	private Node2D ySortRoot;
 	private BuildingResource toPlaceBuildingResource;
+	private GameUi gameUI;
+	
 	
 	
 
@@ -25,12 +28,11 @@ public partial class Main : Node
 		gridManager = GetNode<GridManager>("GridManager");
 		cursor = GetNode<Sprite2D>("Cursor");
 		ySortRoot = GetNode<Node2D>("YSortRoot");
-		placeTowerButton = GetNode<Button>("PlaceTowerButton");
-		placeVillageButton = GetNode<Button>("PlaceVillageButton");
+		gameUI = GetNode<GameUi>("GameUI");
 		
 		cursor.Visible = false;
-		placeTowerButton.Pressed += OnPlaceTowerButtonPressed;
-		placeVillageButton.Pressed += OnPlaceVillageButtonPressed;
+		gameUI.PlaceTowerPressed += OnPlaceTowerButtonPressed;
+		gameUI.PlaceVillagePressed += OnPlaceVillageButtonPressed;
 		gridManager.ResourceTilesUpdated += OnResourceTileUpdated;
 	}
 

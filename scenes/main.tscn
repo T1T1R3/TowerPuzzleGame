@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://dh4tim5jjob3w"]
+[gd_scene load_steps=15 format=4 uid="uid://dh4tim5jjob3w"]
 
 [ext_resource type="Script" path="res://source/Main.cs" id="1_0r2el"]
 [ext_resource type="PackedScene" uid="uid://b3hr5y010h5dd" path="res://scenes/manager/GridManager.tscn" id="2_gtuho"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://mmblktaiu0du" path="res://assets/tiles/Foam.png" id="4_rrogu"]
 [ext_resource type="PackedScene" uid="uid://dyeh0qm3hcign" path="res://scenes/building/base.tscn" id="5_hey3b"]
 [ext_resource type="TileSet" uid="uid://41klem8yb3ks" path="res://resources/highlight_tileset.tres" id="5_yijpm"]
+[ext_resource type="PackedScene" uid="uid://btlhw0krp3we0" path="res://scenes/ui/game_ui.tscn" id="8_1mve5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ncfig"]
 texture = ExtResource("3_f2slg")
@@ -92,34 +93,4 @@ modulate = Color(1, 0.690196, 1, 0.6)
 texture = SubResource("PlaceholderTexture2D_o5nq4")
 centered = false
 
-[node name="PlaceTowerButton" type="Button" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -192.0
-offset_top = -80.0
-offset_right = -75.0
-offset_bottom = -49.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "Place Tower"
-
-[node name="PlaceVillageButton" type="Button" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 64.0
-offset_top = -80.0
-offset_right = 181.0
-offset_bottom = -49.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "Place Village"
+[node name="GameUI" parent="." instance=ExtResource("8_1mve5")]
