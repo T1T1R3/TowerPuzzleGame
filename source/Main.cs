@@ -9,8 +9,6 @@ public partial class Main : Node
 {
 	private GridManager gridManager;
 	private Sprite2D cursor;
-	private BuildingResource towerResource;
-	private BuildingResource villageResource;
 	private Button placeTowerButton;
 	private Button placeVillageButton;
 	private Vector2I? hoveredGridCell;
@@ -23,16 +21,13 @@ public partial class Main : Node
 
 	public override void _Ready()
 	{
-		towerResource = GD.Load<BuildingResource>("res://resources/building/tower.tres");
-		villageResource = GD.Load<BuildingResource>("res://resources/building/village.tres");
 		gridManager = GetNode<GridManager>("GridManager");
 		cursor = GetNode<Sprite2D>("Cursor");
 		ySortRoot = GetNode<Node2D>("YSortRoot");
 		gameUI = GetNode<GameUi>("GameUI");
 		
 		cursor.Visible = false;
-		gameUI.PlaceTowerPressed += OnPlaceTowerButtonPressed;
-		gameUI.PlaceVillagePressed += OnPlaceVillageButtonPressed;
+		gameUI.BuildingResourceSelected += ResourceButtonPressed;
 		gridManager.ResourceTilesUpdated += OnResourceTileUpdated;
 	}
 
@@ -73,28 +68,14 @@ public partial class Main : Node
 	} 
 	
 
-	private void OnPlaceTowerButtonPressed()
+	private void ResourceButtonPressed(BuildingResource buildingResource)
 	{
-		toPlaceBuildingResource = towerResource;
+		toPlaceBuildingResource = buildingResource;
 		if (cursor.Visible)
 		{
 			cursor.Visible = false;
 		hoveredGridCell = null;
 		gridManager.ClearHighlightTiles();
-		}
-		else
-			cursor.Visible = true;
-		gridManager.HighlightBuildableTiles();
-	}
-	
-	private void OnPlaceVillageButtonPressed()
-	{
-		toPlaceBuildingResource = villageResource;
-		if (cursor.Visible)
-		{
-			cursor.Visible = false;
-			hoveredGridCell = null;
-			gridManager.ClearHighlightTiles();
 		}
 		else
 			cursor.Visible = true;
